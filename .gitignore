@@ -1,0 +1,13 @@
+# As the models contains really big files with all the tensors, it is not shared in git
+Models/
+cache/
+
+# Enviroment variables
+.env
+.idea/
+
+# Python Caches
+*/__pycache__/
+conversation_cache.db
+
+venv/

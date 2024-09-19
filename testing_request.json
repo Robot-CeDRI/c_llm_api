@@ -1,0 +1,41 @@
+{
+  "user_name": "Julio",
+  "messages": [
+    {
+        "role": "system",
+        "content": "Hello! Im a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, and im here to provide useful information."
+    },
+    {
+        "role": "user",
+        "content": "How does the cluster infrastructure support research at CeDRI?"
+    }
+  ],
+  "inference_parameters": {
+    "temperature": 0.15,
+    "tokens_count": 200,
+    "top_k_tokens": 50,
+    "top_p_tokens": 0.95,
+    "do_sample": true
+  }
+}
+
+{
+  "user_name": "Julio",
+  "messages": [
+    {
+        "role": "system",
+        "content": "Hello! Im a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, and im here to provide useful information."
+    },
+    {
+        "role": "user",
+        "content": "How does the cluster infrastructure support machine learning research at CeDRI?"
+    }
+  ],
+  "inference_parameters": {
+    "temperature": 0.15,
+    "tokens_count": 200,
+    "top_k_tokens": 50,
+    "top_p_tokens": 0.95,
+    "do_sample": true
+  }
+}
