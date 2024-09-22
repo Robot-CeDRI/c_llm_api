@@ -1,20 +1,13 @@
-# Text Generation API (Local LLM Inference)
+# Local LLM Inference API (Text Generation)
 
 > This project presents an API that simplifies the locally setup of a large language model
 > and access to the inference funtionalities using prompt engineering.
 
 ## 1. Installing
 
-**Configure a local token for gitlab authentication:** 
-> https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-
-```bash
-# Download via ssh
-git clone ssh://git@gitlab.estig.ipb.pt:4589/_cedri/paulo_leitao/TextGenerationAPI.git
-```
 ```bash
 # Download via https
-git clone https://gitlab.estig.ipb.pt/_cedri/paulo_leitao/TextGenerationAPI.git
+git clone https://github.com/Robot-CeDRI/c_llm_api.git
 ```
 
 ## 2. Configuring the environment
@@ -27,25 +20,13 @@ git clone https://gitlab.estig.ipb.pt/_cedri/paulo_leitao/TextGenerationAPI.git
 
 ```bash
 # Replace myenv with your preferred environment name.
-python -m venv myenv
-# Activate the myenv enviroment
-.\myenv\Scripts\activate
-# Installing the dependencies from requirements.txt
-pip install -r requirements.txt
-```
-
-### Using Anaconda
-**Install Anaconda:** Download and install Anaconda from anaconda.com.
-
-**Create a Virtual Environment:** Open a terminal or Anaconda Prompt and navigate to the project clone directory.
-
-```bash
-# Replace myenv with your preferred environment name.
-conda create -n myenv python=3.8.10
-# Activate the myenv enviroment
-conda activate myenv
-# Installing the dependencies from requirements.txt
-pip install -r requirements.txt
+python -m venv venv
+# Activate the myenv environment
+.\venv\Scripts\activate
+# Installing the dependencies from requirements-dev.txt - DO THIS ONLY IN A DEV ENVIRONMENT
+pip install -r requirements-dev.txt
+# If in the robot environment use the following requirements instead
+# pip install -r requirements-robot.txt
 ```
 
 ## 3. Running the API server
@@ -55,14 +36,7 @@ Navigate to the project top directory and configure your own token from huggingf
 ### If you are using venv python enviroment
 
 ```bash
-.\myenv\Scripts\activate
-python "project\path\TextGenerationAPI\main.py"
-```
-
-### If you are using an anaconda enviroment
-
-```bash
-conda activate myenv
+.\venv\Scripts\activate
 python "project\path\TextGenerationAPI\main.py"
 ```
 
@@ -90,6 +64,6 @@ The LLMsAPIsTesting directory contains a project that tested 3 major LLM inferen
 
 ## 6. Cautions
 
-This project uses LLM models download from hugging face, this models can be chosed using the enviroment
+This project uses LLM models download from hugging face, this models can be chosen using the environment
 variables, this models can be very large, and require a lot of VRam, Ram, CPU and Storage even for inference
 manners.
