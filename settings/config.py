@@ -11,7 +11,7 @@ class Common(object):
     RAW_MODEL_PATH = "Models/models--TinyLlama--TinyLlama-1.1B-Chat-v1.0"
     RAG_MODEL_PATH = "Models/models--all-MiniLM-L6-v2"
 
-    FINE_TUNED_MODEL_PATH = "C:/1_Arquivos/3_Universidades/IPB/3_Investigacao/Projetos/c_cedrinho_llm_model/model--CedrinhoLLM"
+    FINE_TUNED_MODEL_PATH = "/home/cedri/Desktop/git_automations/Repositories/c_cedrinho_llm_model/model--CedrinhoLLM"
     DATABASE_FILE = "API_Database.db"
 
     MAX_CACHE_CONVERSATIONS = 500
