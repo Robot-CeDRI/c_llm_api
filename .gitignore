@@ -11,3 +11,5 @@ cache/
 conversation_cache.db
 
 venv/
+
+API_Database.db

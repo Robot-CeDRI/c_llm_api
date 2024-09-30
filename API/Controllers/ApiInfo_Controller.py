@@ -13,5 +13,6 @@ async def api_info():
         description="This is a Large Language Model API for text generation.",
         base_model=cfg.HF_LLM_MODEL,
         fine_tuned_model=cfg.FINE_TUNED_MODEL_PATH,
+        rag_model_path=cfg.RAG_MODEL_PATH,
         device=LLM_MODEL.device.__repr__()
     )

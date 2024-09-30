@@ -16,19 +16,16 @@ class LLM:
     def __init__(self):
         self.model_hf_name = cfg.HF_LLM_MODEL
         self.cache_dir = cfg.MODELS_DIR
-        self.hf_token = cfg.HF_TOKEN
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_hf_name, cache_dir=self.cache_dir)
-        base_model = AutoModelForCausalLM.from_pretrained(self.model_hf_name,
+        self.model = AutoModelForCausalLM.from_pretrained(self.model_hf_name,
                                                           torch_dtype=torch.float16,
                                                           device_map="auto",
                                                           trust_remote_code=True,
                                                           cache_dir=self.cache_dir)
         if cfg.FINE_TUNED_MODEL_PATH:
-            peft_model = PeftModel.from_pretrained(base_model, cfg.FINE_TUNED_MODEL_PATH, from_transformers=True, device_map="auto")
+            peft_model = PeftModel.from_pretrained(self.model, cfg.FINE_TUNED_MODEL_PATH, from_transformers=True, device_map="auto")
             self.model = peft_model.merge_and_unload()
-        else:
-            self.model = base_model
         self.pipe = pipeline("text-generation",
                              model=self.model,
                              tokenizer=self.tokenizer,

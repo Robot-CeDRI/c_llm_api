@@ -1,41 +1,71 @@
-{
-  "user_name": "Julio",
-  "messages": [
-    {
-        "role": "system",
-        "content": "Hello! Im a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, and im here to provide useful information."
+[
+  {
+    "user_name": "Julio",
+    "messages": [
+      {
+          "role": "system",
+          "content": "Polytechnic Institute of Bragança or IPB is a university located in the northeast region of Portugal in the city of Bragança. CeDRI or Research Centre in Digitalization and Intelligent Robotics is a research center located inside the IPB facilities. Hello! Im a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, how can i help you today?"
+      },
+      {
+          "role": "user",
+          "content": "Tell me about Professor Paulo Leitão?"
+      }
+    ],
+    "inference_parameters": {
+      "temperature": 0.15,
+      "tokens_count": 300,
+      "top_k_tokens": 50,
+      "top_p_tokens": 0.95,
+      "do_sample": true
     },
-    {
-        "role": "user",
-        "content": "How does the cluster infrastructure support research at CeDRI?"
+    "rag_parameters": {
+      "k": 1
     }
-  ],
-  "inference_parameters": {
-    "temperature": 0.15,
-    "tokens_count": 200,
-    "top_k_tokens": 50,
-    "top_p_tokens": 0.95,
-    "do_sample": true
-  }
-}
-
-{
-  "user_name": "Julio",
-  "messages": [
-    {
-        "role": "system",
-        "content": "Hello! Im a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, and im here to provide useful information."
+  },
+  {
+    "user_name": "Julio",
+    "messages": [
+      {
+          "role": "system",
+          "content": "Polytechnic Institute of Bragança or IPB is a university located in the northeast region of Portugal in the city of Bragança. CeDRI or Research Centre in Digitalization and Intelligent Robotics is a research center located inside the IPB facilities. Hello! Im a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, how can i help you today?"
+      },
+      {
+          "role": "user",
+          "content": "What is the purpose of the Electrical Engineering Laboratory?"
+      }
+    ],
+    "inference_parameters": {
+      "temperature": 0.12,
+      "tokens_count": 300,
+      "top_k_tokens": 50,
+      "top_p_tokens": 0.95,
+      "do_sample": true
     },
-    {
-        "role": "user",
-        "content": "How does the cluster infrastructure support machine learning research at CeDRI?"
+    "rag_parameters": {
+      "k": 1
     }
-  ],
-  "inference_parameters": {
-    "temperature": 0.15,
-    "tokens_count": 200,
-    "top_k_tokens": 50,
-    "top_p_tokens": 0.95,
-    "do_sample": true
+  },
+  {
+    "user_name": "Julio",
+    "messages": [
+      {
+          "role": "system",
+          "content": "Polytechnic Institute of Bragança or IPB is a university located in the northeast region of Portugal in the city of Bragança. CeDRI or Research Centre in Digitalization and Intelligent Robotics is a research center located inside the IPB facilities. Hello! Im a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, how can i help you today?"
+      },
+      {
+          "role": "user",
+          "content": "Who leads CeDRI"
+      }
+    ],
+    "inference_parameters": {
+      "temperature": 0.12,
+      "tokens_count": 300,
+      "top_k_tokens": 50,
+      "top_p_tokens": 0.95,
+      "do_sample": true
+    },
+    "rag_parameters": {
+      "k": 1
+    }
   }
-}
+]
