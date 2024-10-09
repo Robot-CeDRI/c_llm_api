@@ -22,6 +22,8 @@ class RAG:
 
     def _search_faiss_index(self, index, query_embedding, documents, k: int = 2):
         distances, indices = index.search(query_embedding, k)
+        print(distances)
+        if distances[0][0] > cfg.MAX_RAG_DISTANCE: return ""
         relevant_docs = [documents[i] for i in indices[0]]
         return " ".join(relevant_docs)
 
@@ -30,6 +32,7 @@ class RAG:
         document_embeddings, query_embedding = self._exec_document_embedding(documents, query)
         index = self._build_faiss_index(document_embeddings)
         retrieved_context = self._search_faiss_index(index, query_embedding, documents, k)
+        if retrieved_context == "": return query
         return f"Using this statement: {retrieved_context} Answer this question: {query} Answer:"
 
 RAG_ENGINE = RAG()

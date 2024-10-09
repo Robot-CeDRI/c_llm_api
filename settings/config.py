@@ -13,6 +13,7 @@ class Common(object):
 
     FINE_TUNED_MODEL_PATH = "/home/cedri/Desktop/git_automations/Repositories/c_cedrinho_llm_model/model--CedrinhoLLM"
     DATABASE_FILE = "API_Database.db"
+    MAX_RAG_DISTANCE = 1.05
 
     MAX_CACHE_CONVERSATIONS = 500
 
