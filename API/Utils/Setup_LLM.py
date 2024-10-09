@@ -3,14 +3,14 @@ from settings import auto_config as cfg
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 import torch
 from peft import PeftModel
-from datasets import Dataset
+# from datasets import Dataset
 
-def serialize_dataset(messages: list) -> Dataset:
-    message_list = []
-    for m in messages:
-        message_list.append("<|" + m.role + "|>" + m.content)
-    print(message_list)
-    return Dataset.from_list()
+# def serialize_dataset(messages: list) -> Dataset:
+#     message_list = []
+#     for m in messages:
+#         message_list.append("<|" + m.role + "|>" + m.content)
+#     print(message_list)
+#     return Dataset.from_list()
 
 class LLM:
     def __init__(self):
@@ -20,15 +20,17 @@ class LLM:
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_hf_name, cache_dir=self.cache_dir)
         self.model = AutoModelForCausalLM.from_pretrained(self.model_hf_name,
                                                           torch_dtype=torch.float16,
+                                                          offload_folder="offload/",
                                                           device_map="auto",
                                                           trust_remote_code=True,
                                                           cache_dir=self.cache_dir)
         if cfg.FINE_TUNED_MODEL_PATH:
-            peft_model = PeftModel.from_pretrained(self.model, cfg.FINE_TUNED_MODEL_PATH, from_transformers=True, device_map="auto")
+            peft_model = PeftModel.from_pretrained(self.model, cfg.FINE_TUNED_MODEL_PATH, from_transformers=True, offload_folder="offload/", device_map="auto")
             self.model = peft_model.merge_and_unload()
         self.pipe = pipeline("text-generation",
                              model=self.model,
                              tokenizer=self.tokenizer,
+                             offload_folder="offload/",
                              device_map="auto",
                              torch_dtype=torch.float16)
 
