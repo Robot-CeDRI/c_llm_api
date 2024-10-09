@@ -30,7 +30,6 @@ class LLM:
         self.pipe = pipeline("text-generation",
                              model=self.model,
                              tokenizer=self.tokenizer,
-                             offload_folder="offload/",
                              device_map="auto",
                              torch_dtype=torch.float16)
 
