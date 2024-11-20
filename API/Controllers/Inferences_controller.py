@@ -16,8 +16,9 @@ router = APIRouter()
 async def exec_inference(inference_data: InferenceRequestDTO):
     # 1. Execute the RAG_Engine context search in the documents from the knowledge database
     start = time.time()
-    new_query = await RAG_ENGINE.find_contexts(query=inference_data.messages[-1].content, k=inference_data.rag_parameters.k)
-    inference_data.messages[-1].content = new_query
+    if inference_data.rag_parameters.k != 0:
+        new_query = await RAG_ENGINE.find_contexts(query=inference_data.messages[-1].content, k=inference_data.rag_parameters.k)
+        inference_data.messages[-1].content = new_query
     inference = await LLM_MODEL.exec_inference(
         messages=inference_data.messages,
         response_num_tokens=inference_data.inference_parameters.tokens_count,
