@@ -2,7 +2,7 @@ fastapi==0.112.2
 jsonschema==4.23.0
 SQLAlchemy==2.0.34
 uvicorn==0.30.6
-#torch==2.3.0+cu121 replace with the nvidia from jetson orin nx version
+torch @ https://developer.download.nvidia.com/compute/redist/jp/v60dp/pytorch/torch-2.3.0a0+ebedce2.nv24.02-cp310-cp310-linux_aarch64.whl
 transformers==4.44.2
 accelerate==0.34.0
 peft==0.12.0
