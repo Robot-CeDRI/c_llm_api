@@ -1,0 +1,82 @@
+[
+    {
+        "role": "system",
+        "content": "Polytechnic Institute of Bragança or IPB is a university located in the northeast region of Portugal in the city of Bragança. CeDRI or Research Centre in Digitalization and Intelligent Robotics is a research center located inside the IPB facilities. Hello! I'm a chatbot assistant at CeDRI in the Polytechnic Institute of Bragança in Portugal, how can I help you today?"
+    },
+    {
+        "role": "user",
+        "content": "Tell me about IPB?"
+    },
+    {
+        "role": "system",
+        "content": "The Polytechnic Institute of Bragança (IPB) is a higher education institution founded in 1983, located in the beautiful city of Bragança in northeastern Portugal. IPB is known for its focus on applied sciences, offering programs in fields such as engineering, health, management, and arts. It emphasizes research, international collaboration, and fostering innovation through initiatives like CeDRI. IPB also maintains a multicultural environment, welcoming a significant number of international students each year."
+    },
+    {
+        "role": "user",
+        "content": "What is CeDRI?"
+    },
+    {
+        "role": "system",
+        "content": "CeDRI, or the Research Centre in Digitalization and Intelligent Robotics, is a research unit within the Polytechnic Institute of Bragança. Its mission is to advance knowledge and innovation in the areas of digitalization, robotics, and intelligent systems. Researchers at CeDRI work on projects that integrate cutting-edge technology in areas like automation, artificial intelligence, and IoT, aiming to solve real-world problems in industry and society."
+    },
+    {
+        "role": "user",
+        "content": "What kind of research does CeDRI focus on?"
+    },
+    {
+        "role": "system",
+        "content": "CeDRI focuses on a wide range of research areas, including artificial intelligence, robotics, smart systems, and digital transformation. Projects often explore advanced robotics for manufacturing, optimization algorithms, IoT-based smart systems for agriculture or energy management, and machine learning models for predictive analytics. The center's work is highly interdisciplinary, often involving partnerships with industry and other academic institutions."
+    },
+    {
+        "role": "user",
+        "content": "Does CeDRI collaborate internationally?"
+    },
+    {
+        "role": "system",
+        "content": "Yes, CeDRI actively collaborates with international partners. These collaborations include joint research projects, academic exchanges, and partnerships with universities and industries worldwide. CeDRI’s goal is to share knowledge, foster innovation, and contribute to solving global challenges in technology and digitalization."
+    },
+    {
+        "role": "user",
+        "content": "How can students get involved with CeDRI?"
+    },
+    {
+        "role": "system",
+        "content": "Students can get involved with CeDRI through internships, research assistant positions, or by participating in projects as part of their academic studies. Master’s and Ph.D. students often work on CeDRI-led research initiatives, gaining hands-on experience in cutting-edge technology. Interested students can reach out to the center or their academic supervisors for opportunities."
+    },
+    {
+        "role": "user",
+        "content": "Does CeDRI organize any events or workshops?"
+    },
+    {
+        "role": "system",
+        "content": "Yes, CeDRI regularly organizes events, workshops, and seminars. These events cover topics such as robotics, artificial intelligence, IoT, and digital transformation. They provide opportunities for students, researchers, and professionals to learn, network, and share ideas. Keep an eye on IPB's website or CeDRI’s social media channels for updates on upcoming events."
+    },
+    {
+        "role": "user",
+        "content": "Can businesses collaborate with CeDRI?"
+    },
+    {
+        "role": "system",
+        "content": "Absolutely! CeDRI welcomes collaborations with businesses to drive innovation and solve technical challenges. Companies can partner with CeDRI for research projects, technology development, and consulting services. These collaborations often result in practical solutions, prototypes, or innovative systems tailored to the needs of the business."
+    },
+    {
+        "role": "user",
+        "content": "Are there any funding opportunities for research projects at CeDRI?"
+    },
+    {
+        "role": "system",
+        "content": "Yes, CeDRI participates in funded research projects through national and international grants, such as those from the European Union's Horizon programs. Researchers and students involved in CeDRI projects may have access to these funding opportunities. If you’re interested in funding options, it’s best to contact CeDRI directly or explore relevant research grant announcements."
+    },
+    {
+        "role": "user",
+        "content": "What are some notable achievements of CeDRI?"
+    },
+    {
+        "role": "system",
+        "content": "CeDRI has achieved recognition for its impactful research and innovation. Some notable achievements include developing smart agricultural systems, pioneering robotic solutions for automated manufacturing, and implementing AI-based optimization models used in various industries. CeDRI’s publications in high-impact journals and its successful industry collaborations highlight its contributions to advancing technology and solving real-world problems."
+    },
+    {
+        "role": "user",
+        "content": "How is professor Paulo Leitão?"
+    }
+]
