@@ -1,13 +1,13 @@
 import json
 import matplotlib.pyplot as plt
-from Experiments.Utils.Conversation import Conversation
-from Experiments.Utils.Experiment import Experiment
+from Utils.Conversation import Conversation
+from Utils.Experiment import Experiment
 
 url = f"http://localhost:8080/inferences/"
 
 # Testing the inference time in a conversation with different amounts of messages
 
-conversation = Conversation(json.load(open('../conversation.json')))
+conversation = Conversation(json.load(open('conversation.json')))
 
 inference_parameters = {
       "temperature": 0.15,

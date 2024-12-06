@@ -8,6 +8,7 @@ cache/
 
 # Python Caches
 */__pycache__/
+*__pycache__/
 conversation_cache.db
 
 venv/

@@ -1,13 +1,13 @@
 import json
 import matplotlib.pyplot as plt
-from Experiments.Utils.Conversation import Conversation
-from Experiments.Utils.Experiment import Experiment
+from Utils.Conversation import Conversation
+from Utils.Experiment import Experiment
 
 url = f"http://localhost:8080/inferences/"
 
 # Testing the inference time in a conversation with different amounts of messages
 
-conversation = Conversation(json.load(open('../conversation.json')))
+conversation = Conversation(json.load(open('conversation.json')))
 
 inference_parameters = {
       "temperature": 0.15,
@@ -50,18 +50,18 @@ for i in range(len(X)):
     plt.text(X[i], y2[i], f'{round(y2[i], 2)}', fontsize=8, ha='right', va='bottom')
 plt.plot(X, y2)
 
-input("Now please launch the rest of the robot systems that share resource with the API and press any key!")
+#input("Now please launch the rest of the robot systems that share resource with the API and press any key!")
 
-ex3 = Experiment(url)
-for i in range(len(interactions)):
-    accumulated = interactions[:i + 1]
-    messages = [item for sublist in accumulated for item in sublist]
-    ex3.run(messages, inference_parameters, rag_parameters)
+#ex3 = Experiment(url)
+#for i in range(len(interactions)):
+#    accumulated = interactions[:i + 1]
+#    messages = [item for sublist in accumulated for item in sublist]
+#    ex3.run(messages, inference_parameters, rag_parameters)
 
-y3 = ex3.inference_times
-for i in range(len(X)):
-    plt.text(X[i], y3[i], f'{round(y3[i], 2)}', fontsize=8, ha='right', va='bottom')
-plt.plot(X, y3)
+#y3 = ex3.inference_times
+#for i in range(len(X)):
+#    plt.text(X[i], y3[i], f'{round(y3[i], 2)}', fontsize=8, ha='right', va='bottom')
+#plt.plot(X, y3)
 
 plt.xticks(X)
 plt.xlabel("Messages Exchanged")
