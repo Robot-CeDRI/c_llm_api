@@ -2,7 +2,7 @@ import os
 from settings import auto_config as cfg
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 import torch
-from peft import PeftModel
+#from peft import PeftModel #(temporariamente desligado)
 # from datasets import Dataset
 
 # def serialize_dataset(messages: list) -> Dataset:
@@ -24,19 +24,19 @@ class LLM:
                                                           device_map="auto",
                                                           trust_remote_code=True,
                                                           cache_dir=self.cache_dir)
-        if cfg.FINE_TUNED_MODEL_PATH:
-            try:
-                peft_model = PeftModel.from_pretrained(
-                    self.model,
-                    cfg.FINE_TUNED_MODEL_PATH,
-                    from_transformers=True,
-                    offload_folder="offload/",  # Offload for memory management
-                    device_map="auto"
-                )
-                self.model = peft_model.merge_and_unload()
+        #if cfg.FINE_TUNED_MODEL_PATH:
+        #    try:
+        #        peft_model = PeftModel.from_pretrained(
+        #            self.model,
+        #            cfg.FINE_TUNED_MODEL_PATH,
+        #            from_transformers=True,
+        #            offload_folder="offload/",  # Offload for memory management
+        #           device_map="auto"
+        #        )
+        #        self.model = peft_model.merge_and_unload()
 
-            except KeyError as e:
-                print(f"Error while loading LoRA adapter: {str(e)}, using the base model.")
+        #    except KeyError as e:
+        #        print(f"Error while loading LoRA adapter: {str(e)}, using the base model.")
 
         self.pipe = pipeline("text-generation",
                              model=self.model,

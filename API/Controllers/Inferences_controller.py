@@ -2,7 +2,7 @@ from fastapi import APIRouter
 import time
 from datetime import datetime
 from API.Utils.Setup_LLM import LLM_MODEL
-from API.Utils.RAG_Engine import RAG_ENGINE
+#from API.Utils.RAG_Engine import RAG_ENGINE
 from API.Utils.Databases.SQL_Database import DATABASE
 from API.Utils.GeneratedTextProcessing import process_generated_text
 
@@ -16,9 +16,9 @@ router = APIRouter()
 async def exec_inference(inference_data: InferenceRequestDTO):
     # 1. Execute the RAG_Engine context search in the documents from the knowledge database
     start = time.time()
-    if inference_data.rag_parameters.k != 0:
-        new_query = await RAG_ENGINE.find_contexts(query=inference_data.messages[-1].content, k=inference_data.rag_parameters.k)
-        inference_data.messages[-1].content = new_query
+    #if inference_data.rag_parameters.k != 0:
+    #    new_query = await RAG_ENGINE.find_contexts(query=inference_data.messages[-1].content, k=inference_data.rag_parameters.k)
+    #    inference_data.messages[-1].content = new_query
     inference = await LLM_MODEL.exec_inference(
         messages=inference_data.messages,
         response_num_tokens=inference_data.inference_parameters.tokens_count,
