@@ -9,7 +9,7 @@ class Common(object):
     MODELS_DIR = "Models"
     HF_LLM_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
     RAW_MODEL_PATH = "Models/models--TinyLlama--TinyLlama-1.1B-Chat-v1.0"
-    RAG_MODEL_PATH = "Models/models--all-MiniLM-L6-v2"
+    RAG_MODEL_PATH = "sentence-transformers/all-MiniLM-L6-v2"
 
     FINE_TUNED_MODEL_PATH = "" #"/home/cedri/Desktop/git_automations/Repositories/c_cedrinho_llm_model/model--CedrinhoLLM"
     DATABASE_FILE = "API_Database.db"

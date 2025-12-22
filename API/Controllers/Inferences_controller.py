@@ -2,7 +2,7 @@ from fastapi import APIRouter
 import time
 from datetime import datetime
 from API.Utils.Setup_LLM import LLM_MODEL
-#from API.Utils.RAG_Engine import RAG_ENGINE
+from API.Utils.RAG_Engine import RAG_ENGINE
 from API.Utils.Databases.SQL_Database import DATABASE
 from API.Utils.GeneratedTextProcessing import process_generated_text
 
@@ -16,9 +16,22 @@ router = APIRouter()
 async def exec_inference(inference_data: InferenceRequestDTO):
     # 1. Execute the RAG_Engine context search in the documents from the knowledge database
     start = time.time()
-    #if inference_data.rag_parameters.k != 0:
-    #    new_query = await RAG_ENGINE.find_contexts(query=inference_data.messages[-1].content, k=inference_data.rag_parameters.k)
-    #    inference_data.messages[-1].content = new_query
+    # 1. Execute the RAG_Engine context search in the documents from the knowledge database
+    start = time.time()
+    try:
+        k = inference_data.rag_parameters.k
+        if k and k > 0:
+            new_query = await RAG_ENGINE.find_contexts(
+                query=inference_data.messages[-1].content,
+                k=k
+            )
+            # só substitui se o RAG realmente devolver algo útil
+            if isinstance(new_query, str) and new_query.strip():
+                inference_data.messages[-1].content = new_query
+    except Exception as e:
+        # não crasha a API se o RAG falhar
+        print(f"[RAG] disabled for this request due to error: {e}")
+        
     inference = await LLM_MODEL.exec_inference(
         messages=inference_data.messages,
         response_num_tokens=inference_data.inference_parameters.tokens_count,
