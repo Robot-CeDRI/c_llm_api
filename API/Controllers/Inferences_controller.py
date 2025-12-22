@@ -1,37 +1,63 @@
 from fastapi import APIRouter
 import time
-from datetime import datetime
+
 from API.Utils.Setup_LLM import LLM_MODEL
 from API.Utils.RAG_Engine import RAG_ENGINE
 from API.Utils.Databases.SQL_Database import DATABASE
 from API.Utils.GeneratedTextProcessing import process_generated_text
 
-
 from API.DataTransferObjects.Requests.inferenceRequestDTO import InferenceRequestDTO
 from API.DataTransferObjects.Responses.inferenceResponseDTO import InferenceResponseDTO
+from API.DataTransferObjects.Common.messageDTO import MessageDTO
 
 router = APIRouter()
 
-@router.post("/", summary="Execute the LLM Inference of a sequence of messages, identifying context with a RAG Engine.", response_model=InferenceResponseDTO)
+
+def _norm(s: str) -> str:
+    return " ".join((s or "").split())
+
+
+@router.post(
+    "/",
+    summary="Execute the LLM Inference of a sequence of messages, identifying context with a RAG Engine.",
+    response_model=InferenceResponseDTO
+)
 async def exec_inference(inference_data: InferenceRequestDTO):
-    # 1. Execute the RAG_Engine context search in the documents from the knowledge database
     start = time.time()
-    # 1. Execute the RAG_Engine context search in the documents from the knowledge database
-    start = time.time()
+
+    # Guardar pergunta original (para logging)
+    original_user_question = inference_data.messages[-1].content if inference_data.messages else ""
+
+    ctx = ""  # vamos usar para guardrail
+    fallback = "I don't know based on the provided knowledge base."
+
     try:
         k = inference_data.rag_parameters.k
         if k and k > 0:
-            new_query = await RAG_ENGINE.find_contexts(
+            rag_pack = await RAG_ENGINE.find_contexts(
                 query=inference_data.messages[-1].content,
                 k=k
             )
-            # só substitui se o RAG realmente devolver algo útil
-            if isinstance(new_query, str) and new_query.strip():
-                inference_data.messages[-1].content = new_query
+
+            print("[RAG] rag_pack is None/empty?", (not rag_pack))
+
+            if rag_pack and "system_prompt" in rag_pack and "user_prompt" in rag_pack:
+                inference_data.messages = [
+                    MessageDTO(role="system", content=rag_pack["system_prompt"]),
+                    MessageDTO(role="user", content=rag_pack["user_prompt"]),
+                ]
+            else:
+                # Sem contexto -> segue normal (ou podes devolver logo "I don't know..." se quiseres)
+                inference_data.messages = [
+                    MessageDTO(role="system", content="You are an institutional assistant for IPB/CeDRI."),
+                    MessageDTO(role="user", content=inference_data.messages[-1].content),
+                ]
+
     except Exception as e:
-        # não crasha a API se o RAG falhar
         print(f"[RAG] disabled for this request due to error: {e}")
-        
+
+        ctx = ""
+
     inference = await LLM_MODEL.exec_inference(
         messages=inference_data.messages,
         response_num_tokens=inference_data.inference_parameters.tokens_count,
@@ -41,13 +67,28 @@ async def exec_inference(inference_data: InferenceRequestDTO):
     )
     end = time.time()
 
-    # 2. Process the generated text and return in the messages format
-    messages, gen_text = process_generated_text(inference.split('</s>'))
+    # Processar saída
+    messages, gen_text = process_generated_text(inference.split("</s>"))
 
-    # 3. Add operation to the database
-    DATABASE.add_operation(user_name=inference_data.user_name, system_response=gen_text, inference_data=inference_data)
+    # ✅ GUARDRAIL: se houve contexto, só aceitamos resposta que esteja dentro do CONTEXT
+    if ctx and ctx.strip():
+        if _norm(gen_text) != _norm(fallback):
+            if _norm(gen_text) not in _norm(ctx):
+                gen_text = fallback
+                # opcional: também substitui a lista de mensagens para refletir
+                messages = [
+                    {"role": "system", "content": "You are an institutional assistant for IPB/CeDRI."},
+                    {"role": "user", "content": original_user_question},
+                    {"role": "assistant", "content": gen_text},
+                ]
 
-    # 4. Return the inference results
+    # Guardar no DB
+    DATABASE.add_operation(
+        user_name=inference_data.user_name,
+        system_response=gen_text,
+        inference_data=inference_data
+    )
+
     return InferenceResponseDTO(
         messages=messages,
         generated_text=gen_text,

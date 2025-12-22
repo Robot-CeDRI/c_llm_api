@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
@@ -56,15 +57,48 @@ class Database:
             con.close()
         except:
             raise ConnectionError("Cannot connect to the provided connection string.")
+        
+    @staticmethod
+    def _safe_get_last_user_content(inference_data: Any) -> str:
+        """
+        Aguenta tanto DTOs (MessageDTO com .content) como dicts {"content": "..."}.
+        Nunca levanta exception.
+        """
+        try:
+            msgs = getattr(inference_data, "messages", None)
+            if not msgs or len(msgs) == 0:
+                return ""
+
+            last_msg = msgs[-1]
+
+            # Caso dict
+            if isinstance(last_msg, dict):
+                return str(last_msg.get("content", "") or "")
+
+            # Caso DTO / objeto com atributo
+            return str(getattr(last_msg, "content", "") or "")
+        except Exception:
+            return ""
+
+    @staticmethod
+    def _safe_repr(obj: Any) -> str:
+        try:
+            return obj.__repr__()
+        except Exception:
+            try:
+                return str(obj)
+            except Exception:
+                return ""
 
     # PUBLIC FUNCTIONS
 
     def add_operation(self, user_name: str, system_response: str, inference_data: InferenceRequestDTO):
+        user_message = self._safe_get_last_user_content(inference_data)
         with self.session() as session:
             new_operation = Operation(
                 timestamp=datetime.now(),
                 user_name=user_name,
-                user_message=inference_data.messages[-1].content,
+                user_message=user_message,
                 system_response=system_response,
                 inference_parameters=inference_data.inference_parameters.__repr__(),
                 rag_parameters=inference_data.rag_parameters.__repr__()

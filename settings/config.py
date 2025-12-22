@@ -16,15 +16,27 @@ class Common(object):
     MAX_RAG_DISTANCE = 1.05
 
     MAX_CACHE_CONVERSATIONS = 500
+    LLM_BATCH_SIZE = 1          # para 1 request (FASTAPI), 1 é melhor
+    LLM_MAX_NEW_TOKENS_DEFAULT = 80
+    # GPU perf flags (seguro)
+    LLM_USE_TF32 = True
 
 class Dev(Common):
     HF_TOKEN = "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"
     DEBUG = True
+    # DEV = mais rápido no teu PC
+    LLM_BATCH_SIZE = 1
+    LLM_USE_TF32 = True
+    LLM_ATTN_IMPL = "flash_attention_2"  # se falhar, voltamos a None
 
 
 class Production(Common):
     HF_TOKEN = "CEDRI-HF-TOKEN"
     DEBUG = False
+    # ROBOT/PROD = conservador
+    LLM_BATCH_SIZE = 1
+    LLM_USE_TF32 = False
+    LLM_ATTN_IMPL = None
 
 
 class Staging(Production):

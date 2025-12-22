@@ -68,6 +68,12 @@ class RAG:
         ).astype("float32")
 
         scores, indices = self._index.search(q_emb, k)
+        print("[RAG] query:", query)
+        print("[RAG] top scores:", scores[0].tolist())
+        print("[RAG] top idx:", indices[0].tolist())
+        if len(indices[0]) > 0 and indices[0][0] != -1:
+            print("[RAG] top doc:", self._documents[int(indices[0][0])][:200])
+
 
         # Como estamos a usar cosine similarity (IP com embeddings normalizados):
         # scores mais alto = mais parecido.
@@ -80,30 +86,28 @@ class RAG:
         relevant_docs = [self._documents[i] for i in indices[0] if i != -1]
         return "\n---\n".join([str(d) for d in relevant_docs])
 
-    async def find_contexts(self, query: str, k: int) -> str:
+    async def find_contexts(self, query: str, k: int):
         if not self.enabled or self.model is None:
-            return ""   # <- importante
-        
-        ctx = self._search(query, k)
-        
-        # Se não achou contexto, devolve vazio (para o controller decidir)
-        if not ctx.strip():
-            return ""
+            return None
 
-        # Prompt “RAG-only”: força a responder só com o contexto
-        return (
+        ctx = self._search(query, k)
+        if not ctx or not ctx.strip():
+            return None
+
+        system_prompt = (
             "You are an institutional assistant for IPB/CeDRI.\n"
-            "You MUST answer ONLY using the provided CONTEXT.\n"
-            "Treat CONTEXT as the single source of truth.\n"
-            "Do NOT use external knowledge.\n"
+            "Answer ONLY using the provided CONTEXT.\n"
             "If the answer is not explicitly in CONTEXT, reply exactly:\n"
-            "\"I don't know based on the provided knowledge base.\"\n\n"
-            f"CONTEXT:\n{ctx}\n\n"
-            f"QUESTION:\n{query}\n\n"
-            "ANSWER (write the answer directly, without mentioning the context):\n"
-            "Do not say 'based on the context'." 
-               
+            "\"I don't know based on the provided knowledge base.\""
         )
 
+        user_prompt = (
+            f"CONTEXT:\n{ctx.strip()}\n\n"
+            f"QUESTION:\n{query}\n\n"
+            "ANSWER:"
+        )
 
+        return {"system_prompt": system_prompt, "user_prompt": user_prompt}
+
+    
 RAG_ENGINE = RAG()
