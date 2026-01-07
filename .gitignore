@@ -14,3 +14,16 @@ conversation_cache.db
 venv/
 
 API_Database.db
+
+# Python
+*.pyc
+
+
+# HuggingFace / caches
+.huggingface/
+
+# Fine-tuning outputs (VERY IMPORTANT)
+Experiments/outputs/
+
+# Logs
+*.log
