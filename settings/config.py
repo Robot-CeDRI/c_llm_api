@@ -18,7 +18,7 @@ class Common(object):
     MAX_CACHE_CONVERSATIONS = 500
 
 class Dev(Common):
-    HF_TOKEN = "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"
+    HF_TOKEN = ""
     DEBUG = True
 
 
