@@ -95,19 +95,25 @@ class RAG:
             return None
 
         system_prompt = (
-            "You are an institutional assistant for IPB/CeDRI.\n"
-            "Answer ONLY using the provided CONTEXT.\n"
-            "If the answer is not explicitly in CONTEXT, reply exactly:\n"
-            "\"I don't know based on the provided knowledge base.\""
+            "You are an institutional assistant for the Polytechnic Institute of Bragança (IPB) and CeDRI.\n"
+            "RULES:.\n"
+            "1) Answer ONLY using the information in the CONTEXT.\n"
+            "2) Do NOT use external knowledge.\n"
+            "3) Do NOT invent details.\n"
+            "4) If the answer is not explicitly present in the CONTEXT, reply exactly:\n"
+            "5) Keep the answer concise (1–3 sentences).\n"
+            "I don't know based on the provided knowledge base.\n"
         )
 
         user_prompt = (
-            f"CONTEXT:\n{ctx.strip()}\n\n"
+            f"CONTEXT:\n{ctx}\n\n"
             f"QUESTION:\n{query}\n\n"
             "ANSWER:"
+
+            
         )
 
-        return {"system_prompt": system_prompt, "user_prompt": user_prompt}
+        return {"system_prompt": system_prompt, "user_prompt": user_prompt, "context": ctx, "best_score": float(scores[0][0])}
 
     
 RAG_ENGINE = RAG()

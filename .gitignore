@@ -21,9 +21,18 @@ API_Database.db
 
 # HuggingFace / caches
 .huggingface/
+.cache/
+Models/models--*
 
 # Fine-tuning outputs (VERY IMPORTANT)
-Experiments/outputs/
+Experiments/outputs/*
+
+# BUT keep final LoRA adapter
+!Experiments/outputs/tinyllama-ipb-sft-lora/
+!Experiments/outputs/tinyllama-ipb-sft-lora/**
+
+# DB local
+API_Database.db
 
 # Logs
 *.log

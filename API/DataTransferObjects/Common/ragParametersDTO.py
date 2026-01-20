@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
 
 class RAGParameters(BaseModel):
-    k: int
+    k: conint(ge=0, le=10) = 0
